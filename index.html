@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南岛冬季公路旅行</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F3EC;
+    --card: #FFFDF8;
+    --ink: #2B2621;
+    --ink-soft: #5B5349;
+    --moss: #5B7B6F;
+    --moss-deep: #3F5A50;
+    --gold: #C9A66B;
+    --line: #8B8377;
+    --paper-edge: #E8E0D2;
+    --shadow: 0 6px 18px rgba(43,38,33,0.08);
+    --shadow-lift: 0 12px 28px rgba(43,38,33,0.12);
+    --radius: 18px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(201,166,107,0.10), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(91,123,111,0.08), transparent 45%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter','Segoe UI',sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3,.serif{ font-family:'Fraunces',Georgia,serif; }
+  .hand{ font-family:'Caveat','Segoe Print',cursive; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    position:relative; text-align:center; overflow:hidden;
+    min-height:100vh; min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:120px 24px 200px;
+    background:url('hero.jpg') center/cover no-repeat;
+  }
+  .hero-content{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
+  .hero-ridge{ position:absolute; left:0; right:0; bottom:0; height:46vh; min-height:280px; pointer-events:none; z-index:1; }
+  .hero-ridge svg{ position:absolute; bottom:-2px; left:0; width:100%; height:100%; }
+  .eyebrow{ font-family:'Caveat',cursive; font-size:1.75rem; color:var(--moss-deep); display:inline-block; transform:rotate(-2deg); margin-bottom:10px; }
+  .hero h1{ font-size:clamp(3.2rem,9vw,7rem); font-weight:600; margin:0 0 24px; letter-spacing:-0.01em; line-height:1.04; }
+  .hero p.sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:var(--ink-soft); max-width:620px; margin:0 auto 40px; }
+  .hero-meta{ display:flex; flex-wrap:wrap; gap:14px; justify-content:center; position:relative; z-index:2; }
+  .pill{ background:var(--card); border:1px solid var(--paper-edge); border-radius:999px; padding:10px 22px; font-size:0.95rem; color:var(--ink-soft); box-shadow:var(--shadow); display:flex; align-items:center; gap:6px; }
+  .pill b{ color:var(--ink); font-weight:600; }
+  @media (max-width:640px){
+    header.hero{ padding:50px 20px 100px; min-height:58vh; min-height:58svh; justify-content:flex-start; background-position:center top; }
+    .hero h1{ font-size:2.5rem; margin:0 0 12px; }
+    .hero p.sub{ font-size:0.92rem; text-shadow:0 1px 8px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.45); }
+  }
+
+  /* ---------- sections ---------- */
+  .section{ padding:70px 0; position:relative; }
+  .section-head{ text-align:center; margin-bottom:44px; }
+  .section-head .tag{ font-family:'Caveat',cursive; color:var(--gold); font-size:1.3rem; transform:rotate(-1.5deg); display:inline-block; }
+  .section-head h2{ font-size:clamp(1.7rem,3.4vw,2.4rem); margin:4px 0 10px; }
+  .section-head p{ color:var(--ink-soft); max-width:520px; margin:0 auto; font-size:0.96rem; }
+  .divider{ width:60px; height:2px; background:var(--gold); margin:0 auto 70px; border-radius:2px; opacity:.6; }
+
+  /* ---------- map ---------- */
+  .map-card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow-lift); border:1px solid var(--paper-edge); padding:20px 20px 8px; position:relative; }
+  .map-card::before{
+    content:"Google 地图 · 一眼看懂全程"; position:absolute; top:-14px; left:26px;
+    background:var(--gold); color:#fff; font-family:'Caveat',cursive; font-size:1.05rem;
+    padding:3px 16px; border-radius:999px; transform:rotate(-2deg); box-shadow:var(--shadow);
+  }
+  .map-svg-wrap{ width:100%; overflow:hidden; border-radius:12px; }
+  .map-svg-wrap svg{ width:100%; height:auto; display:block; }
+  .stop-label{ font-family:'Caveat',cursive; font-size:16px; fill:var(--ink); }
+  .stop-day{ font-family:'Inter',sans-serif; font-size:9px; fill:var(--moss-deep); font-weight:600; }
+  .map-legend{ display:flex; flex-wrap:wrap; gap:10px 18px; justify-content:center; padding:18px 6px 22px; font-size:0.82rem; color:var(--ink-soft); }
+  .map-legend span{ display:flex; align-items:center; gap:6px; }
+  .dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+
+  /* ---------- timeline ---------- */
+  .timeline{ position:relative; }
+  .timeline::before{
+    content:""; position:absolute; left:33px; top:6px; bottom:6px; width:2px;
+    background-image:linear-gradient(var(--line) 60%, transparent 0%);
+    background-size:2px 10px; background-repeat:repeat-y; opacity:.5;
+  }
+  @media (max-width:640px){ .timeline::before{ left:27px; } }
+
+  .day-card{
+    position:relative; margin-left:78px; margin-bottom:38px;
+    background:var(--card); border:1px solid var(--paper-edge); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:22px 24px 24px;
+  }
+  @media (max-width:640px){ .day-card{ margin-left:60px; padding:18px 16px; } }
+
+  .day-date-badge{
+    position:absolute; left:-78px; top:14px; width:66px; height:66px; border-radius:50%;
+    background:var(--card); border:1.5px solid var(--paper-edge); box-shadow:var(--shadow);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+  }
+  .day-card.buffer .day-date-badge{ border-color:var(--gold); border-width:2px; }
+  .day-date-badge .num{ font-family:'Fraunces',serif; font-weight:700; font-size:1.15rem; color:var(--moss-deep); line-height:1.1; }
+  .day-date-badge .wd{ font-family:'Caveat',cursive; font-size:0.85rem; color:var(--ink-soft); line-height:1; }
+  @media (max-width:640px){
+    .day-date-badge{ left:-60px; width:52px; height:52px; }
+    .day-date-badge .num{ font-size:0.92rem; }
+    .day-date-badge .wd{ font-size:0.7rem; }
+  }
+
+  .day-head{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:6px; }
+  .day-head .d-num{ font-family:'Fraunces',serif; font-weight:700; font-size:1.3rem; color:var(--moss-deep); }
+  .day-head .d-title{ font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; }
+  .day-drive{ font-size:0.8rem; color:var(--ink-soft); background:var(--bg); border:1px dashed var(--paper-edge); padding:2px 10px; border-radius:999px; margin-left:auto; }
+  .day-desc{ font-size:0.93rem; color:var(--ink-soft); margin:8px 0 0; }
+  .day-desc b{ color:var(--ink); font-weight:600; }
+  .note-strip{ margin-top:12px; font-family:'Caveat',cursive; color:var(--moss-deep); font-size:1.05rem; border-left:2px dashed var(--gold); padding-left:10px; }
+
+  /* ---------- day extra: map + photos, flexible ---------- */
+  .day-extra{ margin-top:16px; }
+  .map-embed{ width:100%; border:0; border-radius:12px; display:block; box-shadow:var(--shadow); }
+  .extra-row{ display:grid; gap:10px; margin-top:10px; }
+  .extra-row.cols-2{ grid-template-columns:1fr 1fr; }
+  .extra-row.cols-3{ grid-template-columns:repeat(3,1fr); }
+  @media (max-width:560px){ .extra-row.cols-2, .extra-row.cols-3{ grid-template-columns:1fr 1fr; } }
+
+  .extra-split{ display:grid; grid-template-columns: 1.1fr 1fr; gap:12px; margin-top:10px; align-items:stretch; }
+  @media (max-width:640px){ .extra-split{ grid-template-columns:1fr; } }
+  .extra-split .stack{ display:grid; gap:10px; }
+
+  .photo-ph{
+    position:relative; border-radius:12px; overflow:hidden; box-shadow:var(--shadow);
+    min-height:220px; display:flex; align-items:flex-end;
+  }
+  .photo-ph .cap{ font-family:'Caveat',cursive; color:#fff; font-size:0.98rem; padding:8px 10px; text-shadow:0 1px 3px rgba(0,0,0,.4); }
+  .photo-ph .ph-tag{ position:absolute; top:6px; right:8px; font-size:0.6rem; color:rgba(255,255,255,0.85); background:rgba(0,0,0,0.28); padding:2px 7px; border-radius:999px; }
+  /* ---------- notes / checklist ---------- */
+  .notes-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:22px; }
+  .note-card{ background:var(--card); border:1px solid var(--paper-edge); border-radius:14px; padding:20px 20px 18px; box-shadow:var(--shadow); position:relative; }
+  .note-card:nth-child(odd){ transform:rotate(-0.6deg); }
+  .note-card:nth-child(even){ transform:rotate(0.6deg); }
+  .note-card:hover{ transform:rotate(0deg) translateY(-3px); box-shadow:var(--shadow-lift); transition:.25s; }
+  .washi{ position:absolute; top:-9px; left:24px; width:54px; height:18px;
+    background:repeating-linear-gradient(45deg,var(--gold),var(--gold) 4px,#dcb87e 4px,#dcb87e 8px);
+    opacity:.8; border-radius:2px; transform:rotate(-4deg); }
+  .note-card h4{ font-family:'Fraunces',serif; font-size:1.05rem; margin:6px 0 10px; display:flex; align-items:center; gap:8px; }
+  .note-card ul{ margin:0; padding-left:18px; font-size:0.87rem; color:var(--ink-soft); }
+  .note-card li{ margin-bottom:5px; }
+  .note-card .price{ color:var(--moss-deep); font-weight:600; }
+
+  /* ---------- packing checklist ---------- */
+  .pack-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; }
+  .pack-card{ background:var(--card); border:1px solid var(--paper-edge); border-radius:14px; padding:20px 20px 16px; box-shadow:var(--shadow); position:relative; }
+  .pack-card .washi{ background:repeating-linear-gradient(45deg,var(--moss),var(--moss) 4px,#7f9d92 4px,#7f9d92 8px); }
+  .pack-card h4{ font-family:'Fraunces',serif; font-size:1.05rem; margin:6px 0 12px; }
+  .pack-item{ display:flex; align-items:flex-start; gap:8px; font-size:0.88rem; color:var(--ink-soft); margin-bottom:9px; cursor:pointer; }
+  .pack-item input{ margin-top:3px; accent-color:var(--moss-deep); width:15px; height:15px; flex-shrink:0; }
+  .pack-item span.checked{ text-decoration:line-through; opacity:.55; }
+
+  /* ---------- budget total ---------- */
+  .budget-card{ background:var(--card); border:1px solid var(--paper-edge); border-radius:var(--radius); box-shadow:var(--shadow-lift); padding:26px 28px; max-width:640px; margin:0 auto; }
+  .budget-row{ display:flex; justify-content:space-between; align-items:baseline; padding:9px 0; border-bottom:1px dashed var(--paper-edge); font-size:0.93rem; }
+  .budget-row:last-of-type{ border-bottom:none; }
+  .budget-row span:first-child{ color:var(--ink-soft); }
+  .budget-row span:last-child{ font-weight:600; color:var(--ink); white-space:nowrap; }
+  .budget-total{ display:flex; justify-content:space-between; align-items:baseline; margin-top:16px; padding-top:14px; border-top:2px solid var(--moss); }
+  .budget-total .label{ font-family:'Fraunces',serif; font-size:1.1rem; }
+  .budget-total .val{ font-family:'Fraunces',serif; font-weight:700; font-size:1.5rem; color:var(--moss-deep); }
+  .budget-note{ font-family:'Caveat',cursive; color:var(--gold); font-size:1rem; margin-top:14px; text-align:center; }
+
+  footer{ text-align:center; padding:50px 24px 60px; color:var(--ink-soft); font-size:0.85rem; }
+  footer .hand{ font-size:1.2rem; color:var(--moss-deep); display:block; margin-bottom:6px; }
+  ::selection{ background:var(--gold); color:#fff; }
+  @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } .note-card{ transition:none !important; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-content">
+    <h1>南岛冬季<br>公路旅行</h1>
+    <p class="sub">基督城进 · 皇后镇出 · 2026年8月3日–12日</p>
+  </div>
+  
+</header>
+
+<main class="wrap">
+
+  <!-- ============ MAP ============ -->
+  <section class="section" id="map">
+    <div class="section-head">
+   
+      <h2>路线总览</h2>
+       
+    </div>
+
+    <div class="map-card">
+      <div class="map-svg-wrap">
+        <iframe class="map-embed" height="520" loading="lazy"
+          src="https://maps.google.com/maps?saddr=Christchurch,New+Zealand&daddr=Lake+Tekapo,New+Zealand+to:Aoraki+Mount+Cook+National+Park,New+Zealand+to:Wanaka,New+Zealand+to:Arrowtown,New+Zealand+to:Queenstown,New+Zealand+to:Te+Anau,New+Zealand+to:Milford+Sound,New+Zealand+to:Queenstown,New+Zealand&output=embed">
+        </iframe>
+      </div>
+      <div class="map-legend">
+        <span><i class="dot" style="background:#5B7B6F"></i> D1 基督城入境</span>
+        <span><i class="dot" style="background:#5B7B6F"></i> D2-D3 特卡波 / 库克山</span>
+        <span><i class="dot" style="background:#5B7B6F"></i> D4-D5 瓦纳卡</span>
+        <span><i class="dot" style="background:#C9A66B"></i> D5 箭镇</span>
+        <span><i class="dot" style="background:#3F5A50"></i> D5-D7,D8-10 皇后镇</span>
+        <span><i class="dot" style="background:#5B7B6F"></i> D7 蒂阿瑙</span>
+        <span><i class="dot" style="background:#5B7B6F"></i> D8 米尔福德峡湾</span>
+        <span>✈ 基督城入境 → 皇后镇出境</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ DAYS ============ -->
+  <section class="section" id="days">
+    <div class="section-head">
+      <span class="tag">— 逐日行程 —</span>
+      <h2>Day by Day</h2>
+      <p>10天9晚，从雪山湖泊到峡湾冒险，中间留了弹性缓冲日应对冬季天气。</p>
+    </div>
+
+    <div class="timeline">
+
+      <!-- D1 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/3</span><span class="wd">周一</span></div>
+        <div class="day-head"><span class="d-num">D1</span><span class="d-title">抵达基督城</span></div>
+        <p class="day-desc">早上从布里斯班出发，<b>下午2:25抵达基督城机场</b>，取车、市区休整、超市补给。抵达较晚，当天不安排额外行程，早点休息倒时差。</p>
+      </div>
+
+      <!-- D2 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/4</span><span class="wd">周二</span></div>
+        <div class="day-head"><span class="d-num">D2</span><span class="d-title">前往特卡波湖</span><span class="day-drive">车程约3.5h</span></div>
+        <p class="day-desc">沿途平原、雪山、羊群。抵达后参观<b>好牧羊人教堂</b>，晚上去 Tekapo Springs 泡温泉放松。</p>
+        <div class="day-extra extra-split">
+          <div class="photo-ph" style="min-height:420px;background-image:url('好牧羊人教堂.jpg');background-size:contain;background-repeat:no-repeat;background-position:center;background-color:var(--bg);"><span class="cap">好牧羊人教堂</span></div>
+          <div class="stack">
+            <iframe class="map-embed" height="196" loading="lazy" src="https://maps.google.com/maps?saddr=Christchurch,NZ&daddr=Lake+Tekapo,NZ&output=embed"></iframe>
+            <div class="photo-ph" style="min-height:196px;background-image:url('Tekapo Springs 温泉.jpg');background-size:cover;background-position:center;"><span class="cap">Tekapo Springs 温泉</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D3 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/5</span><span class="wd">周三</span></div>
+        <div class="day-head"><span class="d-num">D3</span><span class="d-title">库克山国家公园一日</span><span class="day-drive">往返约2.5h</span></div>
+        <p class="day-desc"><b>胡克谷步道（Hooker Valley Track）</b>看雪山，视天气和体力走一段。傍晚返回特卡波或Twizel住宿。</p>
+        <div class="day-extra extra-row cols-3">
+          <div class="photo-ph" style="background-image:url('胡克谷步道.jpg');background-size:cover;background-position:center;"><span class="cap">胡克谷步道</span></div>
+          <div class="photo-ph" style="background-image:url('吊桥与雪山.jpg');background-size:cover;background-position:center;"><span class="cap">吊桥与雪山</span></div>
+          <div class="photo-ph" style="background-image:url('Hooker Lake 冰湖.jpg');background-size:cover;background-position:center;"><span class="cap">Hooker Lake 冰湖</span></div>
+        </div>
+      </div>
+
+      <!-- D4 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/6</span><span class="wd">周四</span></div>
+        <div class="day-head"><span class="d-num">D4</span><span class="d-title">前往瓦纳卡</span><span class="day-drive">经林迪斯山口 约2.5-3h</span></div>
+        <p class="day-desc">打卡<b>孤独树（That Wanaka Tree）</b>、<b>Puzzling World</b>，湖边悠闲散步。</p>
+        <div class="day-extra extra-split" style="grid-template-columns:1fr 1.1fr;">
+          <div class="photo-ph" style="min-height:400px;background-image:url('孤独树_cropped.jpg');background-size:cover;background-position:center;"><span class="cap">孤独树</span></div>
+          <iframe class="map-embed" height="400" loading="lazy" src="https://maps.google.com/maps?saddr=Lake+Tekapo,NZ&daddr=Wanaka,NZ&output=embed"></iframe>
+        </div>
+      </div>
+
+      <!-- D5 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/7</span><span class="wd">周五</span></div>
+        <div class="day-head"><span class="d-num">D5</span><span class="d-title">靶场体验 → 箭镇 → 皇后镇</span><span class="day-drive">约4-4.5h含活动</span></div>
+        <p class="day-desc">瓦纳卡出发 → <b>Real Guns 靶场体验</b>（Cardrona Valley，约1.5-2h）→ 翻越皇冠山脉公路 → <b>箭镇</b>老街与中国村遗址小逛 → 抵达皇后镇入住。</p>
+        <div class="note-strip">别忘了带护照办Real Guns登记~</div>
+        <div class="day-extra extra-row cols-2">
+          <div class="photo-ph" style="background-image:url('箭镇老街.jpg');background-size:cover;background-position:center;"><span class="cap">箭镇老街</span></div>
+          <div class="photo-ph" style="background-image:url('初抵皇后镇.jpg');background-size:cover;background-position:center;"><span class="cap">初抵皇后镇</span></div>
+        </div>
+      </div>
+
+      <!-- D6 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/8</span><span class="wd">周六</span></div>
+        <div class="day-head"><span class="d-num">D6</span><span class="d-title">皇后镇冒险日</span></div>
+        <p class="day-desc">上午Vinson跳伞（NZONE，半天行程），同时Michelle+Angela体验<b>SkyTrek 滑翔伞</b>（Coronet Peak 出发，冬季经滑雪缆椅上山）。下午自由休息。</p>
+        <div class="day-extra extra-row cols-2">
+          <div class="photo-ph" style="min-height:260px;background-image:url('高空跳伞 ✈.avif');background-size:cover;background-position:center;"><span class="cap">高空跳伞 ✈</span></div>
+          <div class="photo-ph" style="min-height:260px;background-image:url('SkyTrek 滑翔伞.jpg');background-size:cover;background-position:center;"><span class="cap">SkyTrek 滑翔伞</span></div>
+        </div>
+      </div>
+
+      <!-- D7 -->
+      <div class="day-card buffer">
+        <div class="day-date-badge"><span class="num">8/9</span><span class="wd">周日</span></div>
+        <div class="day-head"><span class="d-num">D7</span><span class="d-title">弹性缓冲日</span></div>
+        <p class="day-desc">若D6顺利完成，轻松逛皇后镇市区；<b>若因天气取消项目，此日上午补做</b>，下午出发前往蒂阿瑙。</p>
+        <div class="day-extra">
+          <iframe class="map-embed" height="400" loading="lazy" src="https://maps.google.com/maps?saddr=Queenstown,NZ&daddr=Te+Anau,NZ&output=embed"></iframe>
+        </div>
+      </div>
+
+      <!-- D8 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/10</span><span class="wd">周一</span></div>
+        <div class="day-head"><span class="d-num">D8</span><span class="d-title">米尔福德峡湾</span><span class="day-drive">往返约4h+船程</span></div>
+        <p class="day-desc">蒂阿瑙出发前往<b>米尔福德峡湾游船</b>，穿越94号公路壮丽景观，结束后返回皇后镇住宿。</p>
+        <div class="day-extra">
+          <iframe class="map-embed" height="420" loading="lazy" src="https://maps.google.com/maps?saddr=Te+Anau,NZ&daddr=Milford+Sound,NZ&output=embed"></iframe>
+          <div class="extra-row cols-2">
+            <div class="photo-ph" style="min-height:392px;background-image:url('峡湾游船.jpg');background-size:cover;background-position:center;"><span class="cap">峡湾游船</span></div>
+            <div class="photo-ph" style="min-height:392px;background-image:url('94号公路沿途.jpg');background-size:cover;background-position:center;"><span class="cap">94号公路沿途</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D9 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/11</span><span class="wd">周二</span></div>
+        <div class="day-head"><span class="d-num">D9</span><span class="d-title">缆车 · Luge · 蒸汽船</span></div>
+        <p class="day-desc"><b>天空缆车</b>上山，山顶可反复玩几趟 <b>Luge 雪橇车</b>，下山步行10-15分钟到 Steamer Wharf 码头，登上 <b>TSS蒸汽船</b>前往瓦尔特高原农场 BBQ，轻松收尾。</p>
+        <div class="day-extra extra-row cols-3">
+          <div class="photo-ph" style="background-image:url('缆车看全景.jpg');background-size:cover;background-position:center;"><span class="cap">缆车看全景</span></div>
+          <div class="photo-ph" style="background-image:url('Luge 雪橇车.jpg');background-size:cover;background-position:center;"><span class="cap">Luge 雪橇车</span></div>
+          <div class="photo-ph" style="background-image:url('TSS蒸汽船.jpg');background-size:cover;background-position:center;"><span class="cap">TSS蒸汽船</span></div>
+        </div>
+      </div>
+
+      <!-- D10 -->
+      <div class="day-card">
+        <div class="day-date-badge"><span class="num">8/12</span><span class="wd">周三</span></div>
+        <div class="day-head"><span class="d-num">D10</span><span class="d-title">皇后镇离境</span></div>
+        <p class="day-desc">上午收拾行李、还车。<b>下午2:15皇后镇起飞</b>，国际航班建议提前2小时到机场，不安排额外活动，直飞返回布里斯班。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ PACKING CHECKLIST ============ -->
+  <section class="section" id="packing">
+    <div class="section-head">
+      <span class="tag">— 出发前检查 —</span>
+      <h2>行李清单</h2>
+      <p>按类别列好了，出发前对照打勾，一样都不落下。</p>
+    </div>
+
+    <div class="pack-grid">
+      <div class="pack-card">
+        <div class="washi"></div>
+        <h4>🧥 衣物与装备</h4>
+        <label class="pack-item"><input type="checkbox"><span>保暖羽绒服 / 厚外套</span></label>
+        <label class="pack-item"><input type="checkbox"><span>抓绒衣、毛衣（多层叠穿）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>保暖内层、厚袜子（多双）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>防水防滑徒步鞋（步道/雪地路面）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>手套、围巾、毛线帽</span></label>
+        <label class="pack-item"><input type="checkbox"><span>太阳镜（雪地反光强）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>防晒霜（南半球紫外线冬天也强）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>泳衣、毛巾（特卡波温泉）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>轻便快干衣物（跳伞/滑翔伞方便活动）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>室内拖鞋（民宿/公寓用）</span></label>
+      </div>
+
+      <div class="pack-card">
+        <div class="washi"></div>
+        <h4>🛂 证件与文件</h4>
+        <label class="pack-item"><input type="checkbox"><span>护照（有效期6个月以上）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>澳洲驾照 + 国际驾照（如需要）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>NZeTA 签证确认信</span></label>
+        <label class="pack-item"><input type="checkbox"><span>机票、租车、住宿确认单（电子+纸质各一份）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>各项活动预订确认单（Real Guns/跳伞/滑翔伞/峡湾游船/蒸汽船）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>旅行保险保单</span></label>
+        <label class="pack-item"><input type="checkbox"><span>国际信用卡（租车预授权用）</span></label>
+      </div>
+
+      <div class="pack-card">
+        <div class="washi"></div>
+        <h4>🎒 其他必备</h4>
+        <label class="pack-item"><input type="checkbox"><span>移动电源 + 充电线</span></label>
+        <label class="pack-item"><input type="checkbox"><span>常备药品（晕车药、感冒药、创可贴）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>少量纽币现金（小镇部分商家偏好现金）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>本地上网卡 / eSIM</span></label>
+        <label class="pack-item"><input type="checkbox"><span>相机、备用存储卡与电池</span></label>
+        <label class="pack-item"><input type="checkbox"><span>环保购物袋（超市塑料袋可能收费）</span></label>
+        <label class="pack-item"><input type="checkbox"><span>保温杯（自驾途中暖饮）</span></label>
+        <p style="font-size:0.78rem;color:var(--ink-soft);margin-top:10px;">💡 新西兰插座和电压与澳洲相同，不需要转换插头。</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ NOTES ============ -->
+  <section class="section" id="notes">
+    <div class="section-head">
+      <span class="tag">— 出发前 —</span>
+      <h2>行前小贴士</h2>
+       
+    </div>
+
+    <div class="notes-grid">
+      <div class="note-card">
+        <div class="washi"></div>
+        <h4>🚗 租车与路况</h4>
+        <ul>
+          <li>基督城取车 · 皇后镇异地还车（单程费提前查好）</li>
+          <li>务必配<b>防滑链</b>，门店会演示安装</li>
+          <li>林迪斯山口 / 皇冠山脉公路 / 米尔福德94号公路冬季易结冰</li>
+          <li>出发前查 NZTA 路况网站</li>
+        </ul>
+      </div>
+
+      <div class="note-card">
+        <div class="washi"></div>
+        <h4>🎟️ 关键预订清单</h4>
+        <ul>
+          <li>Real Guns 靶场体验 <span class="price">NZD 169起</span></li>
+          <li>跳伞 NZONE <span class="price">NZD 335-459</span></li>
+          <li>SkyTrek 滑翔伞 <span class="price">NZD 229-299/人</span></li>
+          <li>米尔福德峡湾游船 <span class="price">NZD 89-150/人</span></li>
+          <li>TSS蒸汽船+农场BBQ <span class="price">NZD 175/人</span></li>
+        </ul>
+      </div>
+
+      <div class="note-card">
+        <div class="washi"></div>
+        <h4>🏠 住宿安排</h4>
+        <ul>
+          <li>Vinson和Angela一间房，Michelle单独一间</li>
+          <li>酒店双房型 或 2卧室Airbnb/公寓均可，视当地供给选更划算的</li>
+          <li>公寓/民宿带厨房，方便妈妈吃惯家常口味</li>
+          <li>皇后镇正值滑雪旺季，建议尽早订房</li>
+        </ul>
+      </div>
+
+      <div class="note-card">
+        <div class="washi"></div>
+        <h4>⛅ 天气敏感提醒</h4>
+        <ul>
+          <li>跳伞 / 滑翔伞排在皇后镇行程<b>前段</b>（D6）</li>
+          <li>D7留作弹性缓冲日，应对临时取消</li>
+          <li>米尔福德公路偶尔因暴雪临时封路</li>
+        </ul>
+      </div>
+
+      <div class="note-card">
+        <div class="washi"></div>
+        <h4>✈️ 航班信息</h4>
+        <ul>
+          <li>去程：布里斯班 → 基督城，8/3 下午2:25抵达</li>
+          <li>回程：皇后镇 → 布里斯班，8/12 下午2:15起飞</li>
+          <li>国际航班建议提前2小时到达机场</li>
+        </ul>
+      </div>
+
+      <div class="note-card">
+        <div class="washi"></div>
+        <h4>🍽️ 饮食安排</h4>
+        <ul>
+          <li>公寓/民宿自己下厨 + 当地小吃兼顾</li>
+          <li>妈妈想尝试的特色餐厅可安排在皇后镇/瓦纳卡</li>
+          <li>大脸汉堡、羊肉、当地海鲜都值得一试</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ============ BUDGET ============ -->
+  <section class="section" id="budget">
+    <div class="section-head">
+      
+      <h2>预算总览</h2>
+       
+    </div>
+
+    <div class="budget-card">
+      <div class="budget-row"><span>租车（含全险+防滑链+异地还车费）+ 汽油</span><span>AUD 1,300 - 1,600</span></div>
+      <div class="budget-row"><span>住宿 · 2间房/2卧室，9晚（皇后镇滑雪季偏高）</span><span>AUD 3,100 - 3,500</span></div>
+      <div class="budget-row"><span>体验类项目（Real Guns/跳伞/滑翔伞/峡湾/蒸汽船/缆车Luge）</span><span>AUD 2,200 - 2,600</span></div>
+      <div class="budget-row"><span>餐饮 · 自炊+当地小吃+1-2次特色餐厅，3人10天</span><span>AUD 2,000 - 2,600</span></div>
+      <div class="budget-total">
+        <span class="label">合计（不含国际机票）</span>
+        <span class="val">AUD 8,600 - 10,300</span>
+      </div>
+    </div>
+     
+  </section>
+
+</main>
+
+<footer>
+  <span class="hand">一路平安，玩得尽兴 ✿</span>
+  南岛冬季公路旅行 · 2026年8月3日–12日
+</footer>
+
+<script>
+  document.querySelectorAll('.pack-item input[type=checkbox]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      var span = this.nextElementSibling;
+      if(this.checked){ span.classList.add('checked'); }
+      else{ span.classList.remove('checked'); }
+    });
+  });
+</script>
+
+</body>
+</html>
