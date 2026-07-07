@@ -162,7 +162,10 @@
   @media (max-width:640px){ .extra-row.stack-mobile{ grid-template-columns:1fr !important; } }
 
   .extra-split{ display:grid; grid-template-columns: 1.1fr 1fr; gap:12px; margin-top:10px; align-items:stretch; }
-  @media (max-width:640px){ .extra-split{ grid-template-columns:1fr; } }
+  @media (max-width:640px){
+    .extra-split{ grid-template-columns:1fr; }
+    .extra-split .church-photo{ align-self:stretch !important; aspect-ratio:auto !important; min-height:220px; width:100%; }
+  }
   .extra-split .stack{ display:grid; gap:10px; }
 
   .photo-ph{
@@ -284,7 +287,7 @@
         <div class="day-head"><span class="d-num">D2</span><span class="d-title">前往特卡波湖</span><span class="day-drive">车程约3.5h</span></div>
         <p class="day-desc">沿途平原、雪山、羊群。抵达后参观<b>好牧羊人教堂</b>，晚上去 Tekapo Springs 泡温泉放松。</p>
         <div class="day-extra extra-split">
-          <div class="photo-ph" style="align-self:start;aspect-ratio:3/2;background-image:url('好牧羊人教堂.jpg');background-size:cover;background-position:center;"><span class="cap">好牧羊人教堂</span></div>
+          <div class="photo-ph church-photo" style="align-self:start;aspect-ratio:3/2;background-image:url('好牧羊人教堂.jpg');background-size:cover;background-position:center;"><span class="cap">好牧羊人教堂</span></div>
           <div class="stack">
             <iframe class="map-embed" height="196" loading="lazy" src="https://maps.google.com/maps?saddr=Christchurch,NZ&daddr=Lake+Tekapo,NZ&output=embed"></iframe>
             <div class="photo-ph" style="min-height:196px;background-image:url('Tekapo Springs 温泉.jpg');background-size:cover;background-position:center;"><span class="cap">Tekapo Springs 温泉</span></div>
