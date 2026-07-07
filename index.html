@@ -245,8 +245,14 @@
 
     <div class="map-card">
       <div class="map-svg-wrap">
+        <!-- 备份：加了 &z=6 缩放参数的版本会让多点路线只剩起点/终点两个点，
+             如果之后想恢复这个版本，把下面这个 iframe 取消注释、注释掉上面那个即可：
         <iframe class="map-embed" height="520" loading="lazy"
           src="https://maps.google.com/maps?saddr=Christchurch,New+Zealand&daddr=Lake+Tekapo,New+Zealand+to:Aoraki+Mount+Cook+National+Park,New+Zealand+to:Wanaka,New+Zealand+to:Arrowtown,New+Zealand+to:Queenstown,New+Zealand+to:Te+Anau,New+Zealand+to:Milford+Sound,New+Zealand+to:Queenstown,New+Zealand&output=embed&z=6">
+        </iframe>
+        -->
+        <iframe class="map-embed" height="520" loading="lazy"
+          src="https://maps.google.com/maps?saddr=Christchurch,New+Zealand&daddr=Lake+Tekapo,New+Zealand+to:Aoraki+Mount+Cook+National+Park,New+Zealand+to:Wanaka,New+Zealand+to:Arrowtown,New+Zealand+to:Queenstown,New+Zealand+to:Te+Anau,New+Zealand+to:Milford+Sound,New+Zealand+to:Queenstown,New+Zealand&output=embed">
         </iframe>
       </div>
       <div class="map-legend">
